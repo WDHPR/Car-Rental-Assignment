@@ -1,0 +1,54 @@
+﻿@page "/bookings"
+@using Car_Rental.Business.Classes
+@using Car_Rental.Common.Enums;
+@inject BookingProcessor bp
+
+<PageTitle>Bookings</PageTitle>
+
+<h3>Booking Overview</h3>
+
+@if (bp.GetBookings() == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">RegNo</th>
+                <th scope="col">Customer</th>
+                <th scope="col">Km Rented</th>
+                <th scope="col">Km Returned</th>
+                <th scope="col">Rented</th>
+                <th scope="col">Returned</th>
+                <th scope="col">Cost</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            @foreach (var item in bp.GetBookings())
+            {
+                <tr>
+                    <td><strong>@item.Vehicle.RegNo</strong></td>
+                    <td>@($"{item.Customer.FirstName} {item.Customer.LastName} ({item.Customer.SSN})")</td>
+                    <td>@item.KmRented</td>
+                    <td>@item.KmReturned</td>
+                    <td>@item.Rented.ToString("d")</td>
+                    <td>@item.Returned?.ToString("d")</td>
+                    <td>@item.Cost</td>
+                    <td>
+                    @if (item.Status == BookingStatuses.open)
+                    {
+                        <span class="badge bg-danger">Open</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Closed</span>
+                    }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

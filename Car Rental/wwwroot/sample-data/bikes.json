@@ -1,0 +1,20 @@
+﻿[
+  {
+    "regNo": "ACB455",
+    "make": "Yamaha",
+    "odometer": 16000,
+    "costKm": 0.5,
+    "CostDay": 60,
+    "type": 3,
+    "status": 1
+  },
+  {
+    "regNo": "NMK846",
+    "make": "Kawasaki",
+    "odometer": 25000,
+    "costKm": 0.5,
+    "CostDay": 120,
+    "type": 3,
+    "status": 0
+  }
+]

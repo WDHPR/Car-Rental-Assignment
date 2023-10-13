@@ -1,0 +1,54 @@
+﻿@page "/"
+@using Car_Rental.Business.Classes
+@using Car_Rental.Common.Interfaces
+@using Car_Rental.Common.Enums
+@inject BookingProcessor bp
+
+
+<PageTitle>Vehicle Overview</PageTitle>
+
+<h3>Vehicle Overview</h3>
+
+@if (bp.GetVehicles() == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">RegNo</th>
+                <th scope="col">Make</th>
+                <th scope="col">Odometer</th>
+                <th scope="col">Cost/Km</th>
+                <th scope="col">Vehicle Type</th>
+                <th scope="col">Cost/Day</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            @foreach (var item in bp.GetVehicles())
+            {
+                <tr>
+                    <td><strong>@item.RegNo</strong></td>
+                    <td>@item.Make</td>
+                    <td>@item.Odometer</td>
+                    <td>@item.CostKm</td>
+                    <td>@item.Type</td>
+                    <td>@item.CostDay</td>
+                    <td>
+                        @if (item.Status == VehicleStatuses.booked)
+                        {
+                            <span class="badge bg-danger rounded-pill">Booked</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-success rounded-pill">Available</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

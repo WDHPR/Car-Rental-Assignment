@@ -1,0 +1,27 @@
+﻿[
+  {
+    "ssn": 123456,
+    "lastName": "Doe",
+    "firstName": "John"
+  },
+  {
+    "ssn": 124557,
+    "lastName": "Doe",
+    "firstName": "Jane"
+  },
+  {
+    "ssn": 514544,
+    "lastName": "Jones",
+    "firstName": "Clinton"
+  },
+  {
+    "ssn": 123846,
+    "lastName": "Caffrey",
+    "firstName": "Neil"
+  },
+  {
+    "ssn": 42875,
+    "lastName": "Burke",
+    "firstName": "Peter"
+  }
+]

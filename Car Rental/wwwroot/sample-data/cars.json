@@ -1,0 +1,56 @@
+﻿[
+  {
+    "regNo": "ABC432",
+    "make": "Saab",
+    "odometer": 123000,
+    "costKm": 0.5,
+    "CostDay": 100,
+    "type": 0,
+    "status": 0
+  },
+  {
+    "regNo": "AVD123",
+    "make": "Toyota",
+    "odometer": 25000,
+    "costKm": 1,
+    "CostDay": 120,
+    "type": 0,
+    "status": 1
+  },
+  {
+    "regNo": "FED666",
+    "make": "Volvo",
+    "odometer": 1500,
+    "costKm": 1.5,
+    "CostDay": 180,
+    "type": 1,
+    "status": 0
+  },
+  {
+    "regNo": "KDM744",
+    "make": "VW",
+    "odometer": 86000,
+    "costKm": 1,
+    "CostDay": 100,
+    "type": 2,
+    "status": 0
+  },
+  {
+    "regNo": "BCA543",
+    "make": "Volvo",
+    "odometer": 47000,
+    "costKm": 1,
+    "CostDay": 150,
+    "type": 1,
+    "status": 1
+  },
+  {
+    "regNo": "RED987",
+    "make": "Tesla",
+    "odometer": 16000,
+    "costKm": 1,
+    "CostDay": 200,
+    "type": 0,
+    "status": 0
+  }
+]

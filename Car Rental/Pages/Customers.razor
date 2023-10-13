@@ -1,0 +1,34 @@
+﻿@page "/customers"
+@using Car_Rental.Business.Classes
+@inject BookingProcessor bp
+
+<PageTitle>Customer Overview</PageTitle>
+
+<h3>Customer Overview</h3>
+
+@if (bp.GetCustomers() == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-hover w-50">
+        <thead>
+            <tr>
+                <th>SSN</th>
+                <th>Last Name</th>
+                <th>First Name</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            @foreach (var item in bp.GetCustomers())
+            {
+                <tr>
+                    <td><strong>@item.SSN</strong></td>
+                    <td>@item.LastName</td>
+                    <td>@item.FirstName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
