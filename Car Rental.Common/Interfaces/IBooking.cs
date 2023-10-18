@@ -1,9 +1,5 @@
-﻿using Car_Rental.Common.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Car_Rental.Common.Classes;
+using Car_Rental.Common.Enums;
 
 namespace Car_Rental.Common.Interfaces;
 
@@ -15,7 +11,7 @@ public interface IBooking
     public double? Cost { get; set; }
     public DateTime Rented { get; init; }
     public DateTime? Returned { get; set; }
-    public IVehicle Vehicle { get; set; }
+    public Vehicle Vehicle { get; set; }
     public IPerson Customer { get; init; }
     public BookingStatuses Status { get; set; }
 

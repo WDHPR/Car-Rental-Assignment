@@ -11,7 +11,7 @@ public class Booking : IBooking
     public double? Cost { get; set; }
     public DateTime Rented { get; init; }
     public DateTime? Returned { get; set; }
-    public IVehicle Vehicle { get; set; }
+    public Vehicle Vehicle { get; set; }
     public IPerson Customer { get; init; }
     public BookingStatuses Status { get; set; }
 
@@ -19,7 +19,7 @@ public class Booking : IBooking
         (int id,
         DateTime rented,
         IPerson customer,
-        IVehicle vehicle,
+        Vehicle vehicle,
         DateTime? returned = null,
         int? kmReturned = null,
         double? cost = null,
