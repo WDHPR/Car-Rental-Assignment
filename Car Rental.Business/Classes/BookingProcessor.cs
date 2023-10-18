@@ -1,4 +1,5 @@
-﻿using Car_Rental.Common.Enums;
+﻿using Car_Rental.Common.Classes;
+using Car_Rental.Common.Enums;
 using Car_Rental.Common.Interfaces;
 using Car_Rental.Data.Interfaces;
 
@@ -12,7 +13,7 @@ public class BookingProcessor
     
     public IEnumerable<IPerson> GetCustomers() => _db.GetCustomers();
    
-    public IEnumerable<IVehicle> GetVehicles(VehicleStatuses status = default) => _db.GetVehicles(status);
+    public IEnumerable<Vehicle> GetVehicles(VehicleStatuses status = default) => _db.GetVehicles(status);
 
     public IEnumerable<IBooking> GetBookings() => _db.GetBookings();
     
