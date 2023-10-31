@@ -38,14 +38,9 @@ else
                     <td>@item.Type</td>
                     <td>@item.CostDay</td>
                     <td>
-                        @if (item.Status == VehicleStatuses.booked)
-                        {
-                            <span class="badge bg-danger rounded-pill">Booked</span>
-                        }
-                        else
-                        {
-                            <span class="badge bg-success rounded-pill">Available</span>
-                        }
+                        <span class="badge bg-@(item.Status == VehicleStatuses.Booked ? "danger" : "success") rounded-pill">
+                            @item.Status.ToString()
+                        </span>
                     </td>
                 </tr>
             }

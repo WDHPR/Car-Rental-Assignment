@@ -13,8 +13,8 @@ public class Car : Vehicle
     public VehicleTypes Type { get; init; }
     public VehicleStatuses Status { get; set; }
 */
-    public Car(int id, string regNo, string make, int odometer, double costKm, int costDay, VehicleTypes type, VehicleStatuses status = VehicleStatuses.available)
-        : base(id,regNo,make,odometer,costKm,costDay,type,status)
+    public Car(int id, string regNo, string make, int odometer, double costKm, VehicleTypes type, VehicleStatuses status = VehicleStatuses.Available)
+        : base(id,regNo,make,odometer,costKm,type,status)
     {
         //Id = id;
         //RegNo = regNo;

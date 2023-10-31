@@ -11,9 +11,9 @@ public interface IBooking
     public double? Cost { get; set; }
     public DateTime Rented { get; init; }
     public DateTime? Returned { get; set; }
-    public Vehicle Vehicle { get; set; }
+    public IVehicle Vehicle { get; set; }
     public IPerson Customer { get; init; }
     public BookingStatuses Status { get; set; }
 
-    public void ReturnVehicle(DateTime returned, int kmReturned);
+    public void ReturnVehicle(DateTime returned, int kmDriven);
 }

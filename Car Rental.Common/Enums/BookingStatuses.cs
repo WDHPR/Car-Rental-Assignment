@@ -2,6 +2,6 @@
 
 public enum BookingStatuses
 {
-    open,
-    closed,
+    Open,
+    Closed,
 }
