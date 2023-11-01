@@ -7,46 +7,39 @@
 
 <h3>Booking Overview</h3>
 
-@if (bp.GetBookings() == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <table class="table table-hover">
-        <thead>
-            <tr class="table-dark">
-                <th scope="col">RegNo</th>
-                <th scope="col">Customer</th>
-                <th scope="col">Km Rented</th>
-                <th scope="col">Km Returned</th>
-                <th scope="col">Rented</th>
-                <th scope="col">Returned</th>
-                <th scope="col">Cost</th>
-                <th scope="col">Status</th>
-            </tr>
-        </thead>
-        <tbody class="table-group-divider">
-            <tr class="table-secondary">
+<table class="table table-hover">
+    <thead>
+        <tr class="table-dark">
+            <th scope="col">RegNo</th>
+            <th scope="col">Customer</th>
+            <th scope="col">Km Rented</th>
+            <th scope="col">Km Returned</th>
+            <th scope="col">Rented</th>
+            <th scope="col">Returned</th>
+            <th scope="col">Cost</th>
+            <th scope="col">Status</th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        <tr class="table-secondary">
 
+        </tr>
+        @foreach (var item in bp.GetBookings())
+        {
+            <tr>
+                <td><strong>@item.Vehicle.RegNo</strong></td>
+                <td>@($"{item.Customer.FirstName} {item.Customer.LastName} ({item.Customer.SSN})")</td>
+                <td>@item.KmRented</td>
+                <td>@item.KmReturned</td>
+                <td>@item.Rented.ToString("d")</td>
+                <td>@item.Returned?.ToString("d")</td>
+                <td>@item.Cost</td>
+                <td>
+                    <span class="badge bg-@(item.Status == BookingStatuses.Closed ? "secondary" : "danger")">
+                        @item.Status.ToString()
+                    </span>
+                </td>
             </tr>
-            @foreach (var item in bp.GetBookings())
-            {
-                <tr>
-                    <td><strong>@item.Vehicle.RegNo</strong></td>
-                    <td>@($"{item.Customer.FirstName} {item.Customer.LastName} ({item.Customer.SSN})")</td>
-                    <td>@item.KmRented</td>
-                    <td>@item.KmReturned</td>
-                    <td>@item.Rented.ToString("d")</td>
-                    <td>@item.Returned?.ToString("d")</td>
-                    <td>@item.Cost</td>
-                    <td>
-                        <span class="badge bg-@(item.Status == BookingStatuses.Closed ? "secondary" : "danger")">
-                            @item.Status.ToString()
-                        </span>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+        }
+    </tbody>
+</table>

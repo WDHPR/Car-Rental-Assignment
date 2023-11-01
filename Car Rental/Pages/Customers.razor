@@ -6,41 +6,34 @@
 
 <h3>Customer Overview</h3>
 
-@if (bp.GetCustomers() == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <table class="table table-hover w-75">
-        <thead>
-            <tr class="table-dark">
-                <th>SSN</th>
-                <th>Last Name</th>
-                <th>First Name</th>
+<table class="table table-hover w-75">
+    <thead>
+        <tr class="table-dark">
+            <th>SSN</th>
+            <th>Last Name</th>
+            <th>First Name</th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        <tr class="table-secondary">
+            <td>
+                <input type="number" min="0" step="1" class="form-control" placeholder="SSN" @bind="bp.SsnInput">
+            </td>
+            <td>
+                <input type="text" class="form-control" placeholder="Last Name" @bind="bp.LastNameInput">
+            </td>
+            <td class="input-group">
+                <input type="text" class="form-control" placeholder="First Name" @bind="bp.FirstNameInput">
+                <button class="btn btn-outline-secondary" type="button" @onclick="(()=>bp.AddCustomer(bp.SsnInput,bp.LastNameInput,bp.FirstNameInput))">Add</button>
+            </td>
+        </tr>
+        @foreach (var item in bp.GetCustomers())
+        {
+            <tr>
+                <td><strong>@item.SSN</strong></td>
+                <td>@item.LastName</td>
+                <td>@item.FirstName</td>
             </tr>
-        </thead>
-        <tbody class="table-group-divider">
-            <tr class="table-secondary">
-                <td>
-                    <input type="number" min="0" step="1" class="form-control" placeholder="SSN" @bind="bp.SsnInput">
-                </td>
-                <td>
-                    <input type="text" class="form-control" placeholder="Last Name" @bind="bp.LastNameInput">
-                </td>
-                <td class="input-group">
-                    <input type="text" class="form-control" placeholder="First Name" @bind="bp.FirstNameInput">
-                    <button class="btn btn-outline-secondary" type="button" @onclick="(()=>bp.AddCustomer(bp.SsnInput,bp.LastNameInput,bp.FirstNameInput))">Add</button>
-                </td>
-            </tr>
-            @foreach (var item in bp.GetCustomers())
-            {
-                <tr>
-                    <td><strong>@item.SSN</strong></td>
-                    <td>@item.LastName</td>
-                    <td>@item.FirstName</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+        }
+    </tbody>
+</table>

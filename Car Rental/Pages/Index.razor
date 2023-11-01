@@ -9,91 +9,83 @@
 
 <h3>Vehicle Overview</h3>
 
-@if (bp.GetVehicles() == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <table class="table table-hover">
-        <thead>
-            <tr class="table-dark">
-                <th scope="col">RegNo</th>
-                <th scope="col">Make</th>
-                <th scope="col">Odometer</th>
-                <th scope="col">Cost/Km</th>
-                <th scope="col">Vehicle Type</th>
-                <th scope="col">Cost/Day</th>
-                <th scope="col">Action</th>
-                <th scope="col">Status</th>
-            </tr>
-        </thead>
-        <tbody class="table-group-divider">
-            <tr class="table-secondary">
+<table class="table table-hover">
+    <thead>
+        <tr class="table-dark">
+            <th scope="col">RegNo</th>
+            <th scope="col">Make</th>
+            <th scope="col">Odometer</th>
+            <th scope="col">Cost/Km</th>
+            <th scope="col">Vehicle Type</th>
+            <th scope="col">Cost/Day</th>
+            <th scope="col">Action</th>
+            <th scope="col">Status</th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        <tr class="table-secondary">
+            <td>
+                <input type="text" class="form-control" placeholder="RegNo" disabled="@bp.Processing" @bind="bp.RegNoInput">
+            </td>
+            <td>
+                <input type="text" class="form-control" placeholder="Make" disabled="@bp.Processing" @bind="bp.MakeInput">
+            </td>
+            <td>
+                <input type="number" min="0" step="1" class="form-control" placeholder="Odometer" disabled="@bp.Processing" @bind="bp.OdometerInput">
+            </td>
+            <td>
+                <input type="number" min="0" class="form-control" placeholder="CostKm" disabled="@bp.Processing" @bind="bp.CostKmInput">
+            </td>
+            <td>
+                <select class="form-select" disabled="@bp.Processing" @bind="bp.VehicleTypeInput">
+                    @foreach(var t in bp.VehicleTypeNames)
+                    {
+                    <option value="@t">@t</option>
+                    }
+                </select>
+            </td>
+            <td></td>
+            <td>
+                <button class="btn btn-outline-success" type="button" disabled="@bp.Processing" @onclick="(()=>bp.AddVehicle(bp.RegNoInput,bp.MakeInput,bp.OdometerInput,bp.CostKmInput,bp.GetVehicleTypes(bp.VehicleTypeInput)))">Add</button>
+            </td>
+            <td>
+                <span class="badge bg-warning rounded-pill">@(bp.Processing ? "Processing" : "")</span>
+            </td>
+        </tr>
+        @foreach (var item in bp.GetVehicles())
+        {
+            <tr>
+                <td><strong>@item.RegNo</strong></td>
+                <td>@item.Make</td>
+                <td>@item.Odometer</td>
+                <td>@item.CostKm</td>
+                <td>@item.Type</td>
+                <td>@item.CostDay</td>
                 <td>
-                    <input type="text" class="form-control" placeholder="RegNo" disabled="@bp.Processing" @bind="bp.RegNoInput">
-                </td>
-                <td>
-                    <input type="text" class="form-control" placeholder="Make" disabled="@bp.Processing" @bind="bp.MakeInput">
-                </td>
-                <td>
-                    <input type="number" min="0" step="1" class="form-control" placeholder="Odometer" disabled="@bp.Processing" @bind="bp.OdometerInput">
-                </td>
-                <td>
-                    <input type="number" min="0" class="form-control" placeholder="CostKm" disabled="@bp.Processing" @bind="bp.CostKmInput">
-                </td>
-                <td>
-                    <select class="form-select" disabled="@bp.Processing" @bind="bp.VehicleTypeInput">
-                        @foreach(var t in bp.VehicleTypeNames)
+                    <div class="input-group">
+                        @if(item.Status == VehicleStatuses.Available)
                         {
-                        <option value="@t">@t</option>
+                            <select class="form-select" disabled="@bp.Processing" @bind="bp.CustomerId">
+                                @foreach(var c in bp.GetCustomers())
+                                {
+                                    <option value="@c.Id">@($"{c.LastName} {c.FirstName} ({c.SSN})")</option>
+                                }
+                            </select>
+                            <button class="btn btn-outline-primary" type="button" disabled="@bp.Processing" @onclick="(()=>bp.RentVehicle(item.Id,bp.CustomerId))">Rent</button>
                         }
-                    </select>
+                        else
+                        {
+                            <input type="number" min="0" step="1" class="form-control" placeholder="Distance" disabled="@bp.Processing" @bind="bp.DistanceInput" />
+                            <button class="btn btn-outline-danger" type="button" disabled="@bp.Processing" @onclick="(()=>bp.ReturnVehicle(item.Id,bp.DistanceInput))">Return</button>
+                        }
+                    </div>
                 </td>
-                <td></td>
                 <td>
-                    <button class="btn btn-outline-success" type="button" @onclick="(()=>bp.AddVehicle(bp.RegNoInput,bp.MakeInput,bp.OdometerInput,bp.CostKmInput,bp.GetVehicleTypes(bp.VehicleTypeInput)))">Add</button>
-                </td>
-                <td>@if(bp.Processing){
-                    <span class="badge bg-warning rounded-pill">Processing</span>
-                }
+                    <span class="badge bg-@(item.Status == VehicleStatuses.Booked ? "danger" : "success") rounded-pill">
+                        @item.Status.ToString()
+                    </span>
                 </td>
             </tr>
-            @foreach (var item in bp.GetVehicles())
-            {
-                <tr>
-                    <td><strong>@item.RegNo</strong></td>
-                    <td>@item.Make</td>
-                    <td>@item.Odometer</td>
-                    <td>@item.CostKm</td>
-                    <td>@item.Type</td>
-                    <td>@item.CostDay</td>
-                    <td>
-                        <div class="input-group">
-                            @if(item.Status == VehicleStatuses.Available)
-                            {
-                                <select class="form-select" disabled="@bp.Processing" @bind="bp.CustomerId">
-                                    @foreach(var c in bp.GetCustomers())
-                                    {
-                                        <option value="@c.Id">@($"{c.LastName} {c.FirstName} ({c.SSN})")</option>
-                                    }
-                                </select>
-                                <button class="btn btn-outline-primary" type="button" @onclick="(()=>bp.RentVehicle(item.Id,bp.CustomerId))">Rent</button>
-                            }
-                            else
-                            {
-                                <input type="number" min="0" step="1" class="form-control" placeholder="Distance" disabled="@bp.Processing" @bind="bp.DistanceInput" />
-                                <button class="btn btn-outline-danger" type="button" @onclick="(()=>bp.ReturnVehicle(item.Id,bp.DistanceInput))">Return</button>
-                            }
-                        </div>
-                    </td>
-                    <td>
-                        <span class="badge bg-@(item.Status == VehicleStatuses.Booked ? "danger" : "success") rounded-pill">
-                            @item.Status.ToString()
-                        </span>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+        }
+    </tbody>
+</table>

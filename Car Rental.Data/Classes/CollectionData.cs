@@ -40,14 +40,10 @@ public class CollectionData : IData
         _bookings.Add(new Booking(NextBookingId, new DateTime(2023, 10, 7), Single<IPerson>(p => p.Id == 2), Single<IVehicle>(v => v.Id == 2)));
         _bookings.Add(new Booking(NextBookingId, new DateTime(2023, 9, 25), Single<IPerson>(p => p.Id == 4), Single<IVehicle>(v => v.Id == 5)));
 
-        //Add(RentVehicle(3, 3));
         //Change booking 3 to returned
         Single<IBooking>(b => b.Id == 3).ReturnVehicle(new DateTime(2023, 9, 30), 650);
-
-        //Add(RentVehicle(3, 4));
-        //Add(RentVehicle(5, 3));
-
     }
+
     public List<T> Get<T>(Func<T, bool>? expression)
     {
         try
@@ -125,11 +121,12 @@ public class CollectionData : IData
         }
     }
 
-/*    public IBooking ReturnVehicle(int vehicleId)
+    public IBooking ReturnVehicle(int vehicleId)
     {
         try
         {
-            var booking = Single<IBooking>(b => b.Id == vehicleId);
+            var bookings = Get<IBooking>(b => b.Status == BookingStatuses.Open);
+            var booking = bookings.SingleOrDefault(b => b.Vehicle.Id == vehicleId);
 
             if (booking == null)
                 throw new ArgumentException("Booking not found");
@@ -141,5 +138,4 @@ public class CollectionData : IData
             throw;
         }
     }
-*/
 }

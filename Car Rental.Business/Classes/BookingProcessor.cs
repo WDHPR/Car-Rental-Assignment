@@ -10,6 +10,7 @@ public class BookingProcessor
 {
     private readonly IData _db;
 
+    //Variables for UI-inputs
     public string RegNoInput { get; set; } = string.Empty;
     public string MakeInput { get; set; } = string.Empty;
     public int OdometerInput { get; set; } = 0;
@@ -37,23 +38,9 @@ public class BookingProcessor
     }
 
     public IPerson? GetCustomer(int ssn) => _db.Single<IPerson>(p => p.SSN == ssn);
-    //change back to this code if input is only possible as string
-/*    {
-        try
-        {
-            var ssnToInt = Int32.Parse(ssn);
-            return _db.Single<IPerson>(p => p.SSN == ssnToInt);
-        }
-        catch(FormatException e)
-        {
-            throw;
-        }
-    }
-*/
     public IVehicle? GetVehicle(int vehicleId) => _db.Single<IVehicle>(v => v.Id == vehicleId);
     public IVehicle? GetVehicle(string regNo) => _db.Single<IVehicle>(v => v.RegNo == regNo);
 
-    //TODO: possibly needs code to deactivate inputs while waiting for task to finish
     public async Task RentVehicle(int vehicleId, int customerId)
     {
         Processing = true;
@@ -63,12 +50,14 @@ public class BookingProcessor
         Processing = false;
     }
 
-    public void ReturnVehicle(int vehicleId, int distance)
+    public async Task ReturnVehicle(int vehicleId, int distance)
     {
-        IBooking? booking = null;
+        Processing = true;
+        await Task.Delay(2000);
+        IBooking? booking;
         try
         {
-            booking = _db.Single<IBooking>(b => b.Vehicle.Id == vehicleId);
+            booking = _db.ReturnVehicle(vehicleId);
 
             if (booking == null)
                 throw new ArgumentException("Booking not found");
@@ -78,6 +67,7 @@ public class BookingProcessor
             throw;
         }
         booking.ReturnVehicle(DateTime.Today, distance);
+        Processing =false;
     }
     
     public void AddVehicle(string regNo, string make, int odometer, double costKm, VehicleTypes type, VehicleStatuses status = default)
