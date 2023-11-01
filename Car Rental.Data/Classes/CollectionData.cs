@@ -12,7 +12,7 @@ public class CollectionData : IData
     readonly List<IVehicle> _vehicles = new();
     readonly List<IBooking> _bookings = new();
     
-    public int NextVehicleId => _vehicles.Count == 0 ? 1 : _vehicles.Max(b => b.Id) +1;
+    public int NextVehicleId => _vehicles.Count == 0 ? 1 : _vehicles.Max(b => b.Id) + 1;
     public int NextCustomerId => _customers.Count == 0 ? 1 : _customers.Max(b => b.Id) + 1;
     public int NextBookingId => _bookings.Count == 0 ? 1 : _bookings.Max(b => b.Id) + 1;
 

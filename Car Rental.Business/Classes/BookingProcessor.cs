@@ -10,14 +10,17 @@ public class BookingProcessor
 {
     private readonly IData _db;
 
-    private string RegNoInput { get; set; } = string.Empty;
-    private string MakeInput { get; set; } = string.Empty;
-    private int OdometerInput { get; set; } = 0;
-    private double CostKmInput { get; set; } = 0;
-    private string VehicleTypeInput { get; set; } = string.Empty;
-    private int? SSNInput {  get; set; } = null;
-    private string FirstNameInput { get; set; } = string.Empty;
-    private string LastNameInput { get; set; } = string.Empty;
+    public string RegNoInput { get; set; } = string.Empty;
+    public string MakeInput { get; set; } = string.Empty;
+    public int OdometerInput { get; set; } = 0;
+    public double CostKmInput { get; set; } = 0;
+    public string VehicleTypeInput { get; set; } = string.Empty;
+    public int? SsnInput { get; set; } = null;
+    public string FirstNameInput { get; set; } = string.Empty;
+    public string LastNameInput { get; set; } = string.Empty;
+    public int DistanceInput { get; set; } = 0;
+    public int CustomerId { get; set; }
+    public bool Processing { get; set; }
 
     public BookingProcessor(IData db) => _db = db;
     
@@ -50,11 +53,14 @@ public class BookingProcessor
     public IVehicle? GetVehicle(int vehicleId) => _db.Single<IVehicle>(v => v.Id == vehicleId);
     public IVehicle? GetVehicle(string regNo) => _db.Single<IVehicle>(v => v.RegNo == regNo);
 
-    //TODO: create async delayed task to create booking and show "processing" during delay
+    //TODO: possibly needs code to deactivate inputs while waiting for task to finish
     public async Task RentVehicle(int vehicleId, int customerId)
     {
+        Processing = true;
+        await Task.Delay(3000);
         var booking = _db.RentVehicle(vehicleId, customerId);
         _db.Add(booking);
+        Processing = false;
     }
 
     public void ReturnVehicle(int vehicleId, int distance)
@@ -85,4 +91,19 @@ public class BookingProcessor
 
         _db.Add(item);
     }
+
+    //TODO: add null-exception handling
+    public void AddCustomer(int? ssnInput, string lastName, string firstName)
+    {
+        if (ssnInput == null || lastName == string.Empty || firstName == string.Empty)
+            return;
+        var ssn = (int)ssnInput;
+        IPerson customer = new Customer(_db.NextCustomerId, ssn, firstName, lastName);
+        _db.Add(customer);
+    }
+
+    //default interface methods
+    public VehicleTypes GetVehicleTypes(string name) => _db.GetVehicleTypes(name);
+    public string[] VehicleTypeNames => _db.VehicleTypeNames;
+    public string[] VehicleStatusNames => _db.VehicleStatusNames;
 }

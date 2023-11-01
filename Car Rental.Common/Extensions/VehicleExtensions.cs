@@ -18,4 +18,7 @@ public static class VehicleExtensions
                 throw new ArgumentException("Vehicle Type does not exist", nameof(type));
         }
     }
+
+    public static int Duration(DateTime rented, DateTime returned) => (int)(returned - rented).TotalDays + 1;
+
 }
