@@ -9,6 +9,15 @@
 
 <h3>Vehicle Overview</h3>
 
+@* Error message *@
+@if (bp.ErrorMessage.Length > 0)
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>@bp.ErrorMessage</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" @onclick="(() => bp.ClearError())"></button>
+    </div>
+}
+
 <table class="table table-hover">
     <thead>
         <tr class="table-dark">
@@ -46,7 +55,7 @@
             </td>
             <td></td>
             <td>
-                <button class="btn btn-outline-success" type="button" disabled="@bp.Processing" @onclick="(()=>bp.AddVehicle(bp.RegNoInput,bp.MakeInput,bp.OdometerInput,bp.CostKmInput,bp.GetVehicleTypes(bp.VehicleTypeInput)))">Add</button>
+                <button class="btn btn-outline-success" type="button" disabled="@bp.Processing" @onclick="(()=>bp.AddVehicle(bp.RegNoInput,bp.MakeInput,bp.OdometerInput,bp.CostKmInput,bp.VehicleTypeInput))">Add</button>
             </td>
             <td>
                 <span class="badge bg-warning rounded-pill">@(bp.Processing ? "Processing" : "")</span>

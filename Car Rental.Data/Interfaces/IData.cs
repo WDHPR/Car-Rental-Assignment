@@ -20,6 +20,15 @@ public interface IData
     //Default Interface Methods
     public string[] VehicleStatusNames => Enum.GetNames(typeof(VehicleStatuses));
     public string[] VehicleTypeNames => Enum.GetNames(typeof(VehicleTypes));
-    public VehicleTypes GetVehicleTypes(string name) => (VehicleTypes)Enum.Parse(typeof(VehicleTypes), name);
-
+    public VehicleTypes GetVehicleTypes(string name)
+    {
+        try
+        {
+            return (VehicleTypes)Enum.Parse(typeof(VehicleTypes), name);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+    }
 }

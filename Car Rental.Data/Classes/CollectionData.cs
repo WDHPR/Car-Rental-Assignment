@@ -50,19 +50,17 @@ public class CollectionData : IData
         {
             var collections = GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
                 .FirstOrDefault(f => f.FieldType == typeof(List<T>))
-                ?? throw new InvalidOperationException("Unsupported Type");
+                ?? throw new InvalidOperationException($"Unsupported Type {typeof(T).Name}");
 
             var value = collections.GetValue(this) ?? throw new InvalidDataException();
 
             var collection = ((List<T>)value).AsQueryable();
 
-            if (expression == null) return collection.ToList();
-
-            return collection.Where(expression).ToList();
+            return expression == null ? collection.ToList() : collection.Where(expression).ToList();
         }
         catch (Exception ex)
         {
-            throw;
+            throw new ArgumentException(ex.Message);
         }
     }
 
@@ -72,34 +70,36 @@ public class CollectionData : IData
         {
             var collections = GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
                 .FirstOrDefault(f => f.FieldType == typeof(List<T>) && f.IsInitOnly)
-                ?? throw new InvalidOperationException("Unsupported Type");
+                ?? throw new InvalidOperationException($"Unsupported Type {typeof(T).Name}");
 
-            var list = collections.GetValue(this) as List<T> ?? throw new InvalidDataException();
+            var list = collections.GetValue(this) as List<T> ?? throw new InvalidDataException("Could not add item to list");
 
             list.Add(item);
         }
         catch (Exception ex)
         {
-            throw;
+            throw new ArgumentException(ex.Message);
         }
     }
-    public T? Single<T>(Func<T, bool> expression)
+    public T Single<T>(Func<T, bool> expression)
     {
         try
         {
             var collections = GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
                 .FirstOrDefault(f => f.FieldType == typeof(List<T>))
-                ?? throw new InvalidOperationException("Unsupported Type");
+                ?? throw new InvalidOperationException($"Unsupported Type {typeof(T).Name}");
 
-            var value = collections.GetValue(this) ?? throw new InvalidDataException("Item not found");
+            var value = collections.GetValue(this) ?? throw new ArgumentException("Item not found");
 
             var collection = ((List<T>)value).AsQueryable();
 
-            return collection.SingleOrDefault(expression);
+            var item = collection.SingleOrDefault(expression) ?? throw new ArgumentException("Item not found");
+
+            return item;
         }
         catch (Exception ex)
         {
-            throw;
+            throw new ArgumentException(ex.Message);
         }
     }
 
@@ -110,14 +110,13 @@ public class CollectionData : IData
             var vehicle = Single<IVehicle>(v => v.Id == vehicleId);
             var customer = Single<IPerson>(p => p.Id == customerId);
 
-            if (vehicle == null || customer == null)
-                throw new ArgumentException("Customer or vehicle not found");
-
-            return new Booking(NextBookingId, DateTime.Today, customer, vehicle);
+            return vehicle == null || customer == null
+                ? throw new ArgumentException("Customer or vehicle not found")
+                : (IBooking)new Booking(NextBookingId, DateTime.Today, customer, vehicle);
         }
         catch (Exception ex)
         {
-            throw;
+            throw new ArgumentException(ex.Message);
         }
     }
 
@@ -128,14 +127,11 @@ public class CollectionData : IData
             var bookings = Get<IBooking>(b => b.Status == BookingStatuses.Open);
             var booking = bookings.SingleOrDefault(b => b.Vehicle.Id == vehicleId);
 
-            if (booking == null)
-                throw new ArgumentException("Booking not found");
-
-            return booking;
+            return booking ?? throw new ArgumentException("Booking not found");
         }
         catch (Exception ex)
         {
-            throw;
+            throw new ArgumentException(ex.Message);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Car_Rental.Common.Enums;
+using Car_Rental.Common.Extensions;
 using Car_Rental.Common.Interfaces;
 
 namespace Car_Rental.Common.Classes;
