@@ -33,7 +33,7 @@
             </td>
             <td class="input-group">
                 <input type="text" class="form-control" placeholder="First Name" @bind="bp.FirstNameInput">
-                <button class="btn btn-outline-secondary" type="button" @onclick="(()=>bp.AddCustomer(bp.SsnInput,bp.LastNameInput,bp.FirstNameInput))">Add</button>
+                <button class="btn btn-success" type="button" @onclick="(()=>bp.AddCustomer(bp.SsnInput,bp.LastNameInput,bp.FirstNameInput))">Add</button>
             </td>
         </tr>
         @foreach (var item in bp.GetCustomers())

@@ -55,7 +55,7 @@
             </td>
             <td></td>
             <td>
-                <button class="btn btn-outline-success" type="button" disabled="@bp.Processing" @onclick="(()=>bp.AddVehicle(bp.RegNoInput,bp.MakeInput,bp.OdometerInput,bp.CostKmInput,bp.VehicleTypeInput))">Add</button>
+                <button class="btn btn-success" type="button" disabled="@bp.Processing" @onclick="(()=>bp.AddVehicle(bp.RegNoInput,bp.MakeInput,bp.OdometerInput,bp.CostKmInput,bp.VehicleTypeInput))">Add</button>
             </td>
             <td>
                 <span class="badge bg-warning rounded-pill">@(bp.Processing ? "Processing" : "")</span>

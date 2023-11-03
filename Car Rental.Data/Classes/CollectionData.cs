@@ -81,7 +81,7 @@ public class CollectionData : IData
             throw new ArgumentException(ex.Message);
         }
     }
-    public T Single<T>(Func<T, bool> expression)
+    public T? Single<T>(Func<T, bool> expression)
     {
         try
         {
@@ -89,11 +89,11 @@ public class CollectionData : IData
                 .FirstOrDefault(f => f.FieldType == typeof(List<T>))
                 ?? throw new InvalidOperationException($"Unsupported Type {typeof(T).Name}");
 
-            var value = collections.GetValue(this) ?? throw new ArgumentException("Item not found");
+            var value = collections.GetValue(this) ?? throw new InvalidDataException();
 
             var collection = ((List<T>)value).AsQueryable();
 
-            var item = collection.SingleOrDefault(expression) ?? throw new ArgumentException("Item not found");
+            var item = collection.SingleOrDefault(expression);
 
             return item;
         }
