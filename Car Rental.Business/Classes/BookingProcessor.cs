@@ -2,7 +2,6 @@
 using Car_Rental.Common.Enums;
 using Car_Rental.Common.Interfaces;
 using Car_Rental.Data.Interfaces;
-using System.Text.RegularExpressions;
 
 namespace Car_Rental.Business.Classes;
 
@@ -135,6 +134,7 @@ public class BookingProcessor
         catch (Exception ex)
         {
             ErrorMessage = ex.Message;
+            Processing = false;
         }
     }
 
@@ -147,7 +147,6 @@ public class BookingProcessor
         {
             if (distanceInput == null)
             {
-                Processing = false;
                 throw new ArgumentException("Invalid input for distance");
             }
 
@@ -156,7 +155,6 @@ public class BookingProcessor
 
             if (booking == null)
             {
-                Processing = false;
                 throw new ArgumentException("Booking not found");
             }
 
@@ -168,6 +166,7 @@ public class BookingProcessor
         catch(Exception ex)
         {
             ErrorMessage = ex.Message;
+            Processing = false;
         }
     }
     

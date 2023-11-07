@@ -36,12 +36,12 @@ public class CollectionData : IData
         _customers.Add(new Customer(NextCustomerId, 123846, "Neil", "Caffrey"));
         _customers.Add(new Customer(NextCustomerId, 428753, "Peter", "Burke"));
 
-        _bookings.Add(new Booking(NextBookingId, new DateTime(2023, 10, 10), Single<IPerson>(p => p.Id == 1), Single<IVehicle>(v => v.Id == 7)));
-        _bookings.Add(new Booking(NextBookingId, new DateTime(2023, 10, 7), Single<IPerson>(p => p.Id == 2), Single<IVehicle>(v => v.Id == 2)));
-        _bookings.Add(new Booking(NextBookingId, new DateTime(2023, 9, 25), Single<IPerson>(p => p.Id == 4), Single<IVehicle>(v => v.Id == 5)));
+        _bookings.Add(new Booking(NextBookingId, new DateTime(2023, 10, 31), Single<IPerson>(p => p.Id == 1), Single<IVehicle>(v => v.Id == 7)));
+        _bookings.Add(new Booking(NextBookingId, new DateTime(2023, 11, 6), Single<IPerson>(p => p.Id == 2), Single<IVehicle>(v => v.Id == 2)));
+        _bookings.Add(new Booking(NextBookingId, new DateTime(2023, 10, 19), Single<IPerson>(p => p.Id == 4), Single<IVehicle>(v => v.Id == 5)));
 
         //Change booking 3 to returned
-        Single<IBooking>(b => b.Id == 3).ReturnVehicle(new DateTime(2023, 9, 30), 650);
+        Single<IBooking>(b => b.Id == 3).ReturnVehicle(new DateTime(2023, 10, 25), 650);
     }
 
     public List<T> Get<T>(Func<T, bool>? expression)
