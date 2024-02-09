@@ -9,7 +9,8 @@ public class BookingProcessor
 {
     private readonly IData _db;
 
-    //Variables for UI-inputs
+    // Variables for UI-inputs
+    // Could be replaced with a class for all of the inputs
     public string RegNoInput { get; set; } = string.Empty;
     public string MakeInput { get; set; } = string.Empty;
     public int OdometerInput { get; set; } = 0;
@@ -38,7 +39,7 @@ public class BookingProcessor
         FirstNameInput = string.Empty;
         LastNameInput = string.Empty;
         DistanceInput = null;
-}
+    }
     
     public IEnumerable<IPerson> GetCustomers()
     {
