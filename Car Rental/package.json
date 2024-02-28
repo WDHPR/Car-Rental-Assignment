@@ -4,16 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "css:build": "npx tailwind build ./wwwroot/css/main.css -o ./wwwroot/css/output.css"
+    "css:build": "npx tailwind build ./wwwroot/css/main.css -o ./wwwroot/css/app.css"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@iconify/json": "^2.2.180",
-    "@iconify/tailwind": "^0.1.4",
-    "autoprefixer": "^10.4.17",
-    "postcss": "^8.4.34",
-    "tailwindcss": "^3.4.1"
-  }
+  "license": "ISC"
 }
